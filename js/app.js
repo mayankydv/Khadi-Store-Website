@@ -7,7 +7,7 @@ function handleRouting() {
   const mainContent = document.getElementById('main-app');
 
   // Close menus/drawers on page transitions
-  toggleMobileMenu();
+  toggleMobileMenu(false);
   toggleCartDrawer(false);
 
   // Parse path and query parameters

@@ -106,12 +106,15 @@
         "Shiprocket Logistics Calculator": [],
         "Order Flow & Stock Deductions": [],
         "Returns & Restocking Loop": [],
-        "SEO Meta Integrity": []
+        "SEO Meta Integrity": [],
+        "Recently Viewed & Banner Settings": []
       };
 
       // Reset store state for testing
       store.initStore();
       store.clearCart();
+      localStorage.setItem('ks_recently_viewed', JSON.stringify([]));
+      store.recentlyViewed = [];
 
       // ==========================================
       // Group 1: Coupons & Discount Logic
@@ -241,6 +244,49 @@
         assertEqual(document.title.includes("Ratlam"), true, "Title features key search keywords (Ratlam)", "SEO Meta Integrity");
       } catch (err) {
         logError(err, "SEO Meta Integrity");
+      }
+
+      // ==========================================
+      // Group 6: Recently Viewed & Banner Settings
+      // ==========================================
+      try {
+        // Assert initial state is empty
+        assertEqual(store.getRecentlyViewed().length, 0, "Recently Viewed is empty on clear", "Recently Viewed & Banner Settings");
+        
+        // Add a product to recently viewed
+        store.addRecentlyViewed("rtw-01");
+        assertEqual(store.getRecentlyViewed().length, 1, "Recently Viewed has 1 item after adding rtw-01", "Recently Viewed & Banner Settings");
+        assertEqual(store.getRecentlyViewed()[0].id, "rtw-01", "Correct product rtw-01 returned", "Recently Viewed & Banner Settings");
+        
+        // Add another product and verify order (newest first)
+        store.addRecentlyViewed("skn-01");
+        assertEqual(store.getRecentlyViewed().length, 2, "Recently Viewed has 2 items", "Recently Viewed & Banner Settings");
+        assertEqual(store.getRecentlyViewed()[0].id, "skn-01", "Newest item (skn-01) is at the front", "Recently Viewed & Banner Settings");
+        
+        // Add duplicate product and verify shift to front
+        store.addRecentlyViewed("rtw-01");
+        assertEqual(store.getRecentlyViewed().length, 2, "Size is still 2 after duplicate", "Recently Viewed & Banner Settings");
+        assertEqual(store.getRecentlyViewed()[0].id, "rtw-01", "Duplicate moved to the front", "Recently Viewed & Banner Settings");
+        
+        // Test banner setting saving
+        const settings = store.getSettings();
+        const testB1 = "https://images.unsplash.com/photo-test-banner1";
+        const testB2 = "https://images.unsplash.com/photo-test-banner2";
+        const testB3 = "https://images.unsplash.com/photo-test-banner3";
+        
+        store.saveSettings({
+          ...settings,
+          banner1: testB1,
+          banner2: testB2,
+          banner3: testB3
+        });
+        
+        const updatedSettings = store.getSettings();
+        assertEqual(updatedSettings.banner1, testB1, "Banner 1 updated successfully", "Recently Viewed & Banner Settings");
+        assertEqual(updatedSettings.banner2, testB2, "Banner 2 updated successfully", "Recently Viewed & Banner Settings");
+        assertEqual(updatedSettings.banner3, testB3, "Banner 3 updated successfully", "Recently Viewed & Banner Settings");
+      } catch (err) {
+        logError(err, "Recently Viewed & Banner Settings");
       }
 
       // RENDER RESULTS

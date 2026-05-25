@@ -1,7 +1,7 @@
 /* ==========================================================================
    DESIGN TOKENS & SYSTEM VARIABLES (Khadi Store Ratlam)
    ========================================================================== */
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap');
 
 :root {
   /* Color Palette */
@@ -20,8 +20,8 @@
   --color-shadow: rgba(27, 51, 34, 0.06);
   
   /* Fonts */
-  --font-heading: 'Playfair Display', Georgia, serif;
-  --font-body: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-heading: 'Lexend', sans-serif;
+  --font-body: 'Lexend', sans-serif;
   
   /* Transition & Spacing */
   --transition-smooth: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -721,15 +721,34 @@ header {
   position: relative;
 }
 
+.product-card-img-wrap::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(27, 51, 34, 0) 60%, rgba(27, 51, 34, 0.45) 100%);
+  opacity: 0;
+  transition: var(--transition-smooth);
+  z-index: 1;
+  pointer-events: none;
+}
+
 .product-card-img-wrap img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: var(--transition-smooth);
+  transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+  cursor: pointer;
 }
 
 .product-card:hover .product-card-img-wrap img {
-  transform: scale(1.05);
+  transform: scale(1.08) rotate(0.5deg);
+}
+
+.product-card:hover .product-card-img-wrap::after {
+  opacity: 1;
 }
 
 .product-card-content {
@@ -929,6 +948,18 @@ header {
   border-color: var(--color-accent-gold);
 }
 
+.shop-categories-chips {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 10px 0 15px 0;
+  margin-bottom: 10px;
+  -webkit-overflow-scrolling: touch;
+}
+.shop-categories-chips::-webkit-scrollbar {
+  display: none;
+}
+
 /* ==========================================================================
    PRODUCT DETAIL PAGE
    ========================================================================== */
@@ -951,12 +982,19 @@ header {
   background-color: var(--color-bg-secondary);
   border-radius: var(--border-radius-md);
   overflow: hidden;
+  position: relative;
 }
 
 .product-main-view img, .product-main-view video {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+  cursor: zoom-in;
+}
+
+.product-main-view:hover img {
+  transform: scale(1.06);
 }
 
 .product-thumbnails {
@@ -1570,7 +1608,7 @@ header {
    ========================================================================== */
 .blog-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 30px;
   margin: 40px 0;
 }
@@ -2004,18 +2042,35 @@ footer {
 @media (max-width: 768px) {
   .header-top {
     padding: 10px 0;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .logo {
+    font-size: 20px;
+  }
+  .logo span {
+    font-size: 9px;
+    letter-spacing: 1px;
+    padding: 1px 4px;
   }
   .search-container {
-    display: none; /* Hide standard search; can toggle via mobile dropdown */
+    display: block !important;
+    order: 3;
+    flex: 1 1 100%;
+    margin: 5px 0 5px 0;
   }
   .mobile-toggle {
     display: block;
-    color: #FAF6F0; /* Cream mobile toggle button */
+    background: none;
+    border: none;
+    color: #FAF6F0;
+    cursor: pointer;
+    padding: 5px;
   }
   .nav-menu {
-    display: none; /* Hidden, shown under menu toggle */
+    display: none;
     flex-direction: column;
-    background-color: #1B3322; /* Royal Green background on mobile menu too */
+    background-color: #1B3322;
     position: absolute;
     top: 100%;
     left: 0;
@@ -2030,28 +2085,49 @@ footer {
   }
   .nav-item {
     width: 100%;
-    text-align: center;
-    padding: 10px 0;
+    text-align: left;
+    padding: 10px 24px;
   }
   .nav-dropdown {
     position: static;
     transform: none;
     box-shadow: none;
     border: none;
-    background-color: rgba(255, 255, 255, 0.05); /* Lighter green contrast */
+    background-color: rgba(255, 255, 255, 0.04);
     width: 100%;
     margin-top: 8px;
     padding: 8px 0;
+    opacity: 1;
+    visibility: visible;
+    display: block;
+  }
+  .dropdown-link {
+    padding: 10px 30px;
+    font-size: 14px;
+    border-left: 2px solid rgba(197, 168, 128, 0.3);
+    margin-left: 15px;
   }
   .hero-slider {
-    height: 360px;
+    height: 280px;
+  }
+  .hero-content {
+    padding: 0 20px;
+    text-align: center;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
   .hero-title {
-    font-size: 28px;
+    font-size: 24px;
+    margin-bottom: 12px;
+  }
+  .hero-subtitle {
+    letter-spacing: 2px;
+    margin-bottom: 8px;
   }
   .hero-desc {
-    font-size: 13px;
-    margin-bottom: 20px;
+    display: none;
   }
   .checkout-form-grid {
     grid-template-columns: 1fr;
@@ -2066,5 +2142,14 @@ footer {
   .float-btn {
     width: 44px;
     height: 44px;
+  }
+  .product-main-view {
+    height: 320px;
+  }
+  .b2b-header-banner {
+    padding: 30px 15px;
+  }
+  .b2b-banner-title {
+    font-size: 26px;
   }
 }

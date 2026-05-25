@@ -127,10 +127,15 @@ function renderHeader() {
         <li class="nav-item"><a href="#shop?category=Skin" class="nav-link" onclick="navigateTo('#shop?category=Skin')">Skin Care</a></li>
         <li class="nav-item"><a href="#shop?category=Hair" class="nav-link" onclick="navigateTo('#shop?category=Hair')">Hair Care</a></li>
         <li class="nav-item"><a href="#shop?category=Face" class="nav-link" onclick="navigateTo('#shop?category=Face')">Face Care</a></li>
-        <li class="nav-item"><a href="#shop?category=Health & Foods" class="nav-link" onclick="navigateTo('#shop?category=Health & Foods')">Foods & Honey</a></li>
-        <li class="nav-item"><a href="#shop?category=Pooja" class="nav-link" onclick="navigateTo('#shop?category=Pooja')">Pooja & Itra</a></li>
-        <li class="nav-item"><a href="#b2b" class="nav-link" onclick="navigateTo('#b2b')">B2B Bulk</a></li>
-        <li class="nav-item"><a href="#blog" class="nav-link" onclick="navigateTo('#blog')">Blogs</a></li>
+        <li class="nav-item">
+          <a href="#" class="nav-link" onclick="event.preventDefault()">More ▾</a>
+          <div class="nav-dropdown">
+            <a href="#shop?category=Health & Foods" class="dropdown-link" onclick="navigateTo('#shop?category=Health & Foods')">Foods & Honey</a>
+            <a href="#shop?category=Pooja" class="dropdown-link" onclick="navigateTo('#shop?category=Pooja')">Pooja & Itra</a>
+            <a href="#b2b" class="dropdown-link" onclick="navigateTo('#b2b')">B2B Wholesale</a>
+            <a href="#blog" class="dropdown-link" onclick="navigateTo('#blog')">Artisan Blogs</a>
+          </div>
+        </li>
         <li class="nav-item"><a href="#contact" class="nav-link" onclick="navigateTo('#contact')">Visit Us</a></li>
       </ul>
     </nav>
@@ -166,16 +171,29 @@ function renderStickyFloats() {
 // --- Home Page Renderer ---
 function renderHome() {
   // Banners data
+  const settings = store.getSettings();
   const banners = [
-    { image: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=1200", title: "Handspun Khadi Collection", desc: "Experience the cool breathability and rustic elegance of organic handloom garments directly from MP weaver cooperatives.", link: "#shop?category=Ready to Wear" },
-    { image: "https://images.unsplash.com/photo-1608248597481-496100c8c836?auto=format&fit=crop&q=80&w=1200", title: "Pure Ayurvedic Elixirs", desc: "Chemical-free body washes, cold-pressed sandalwood soaps, and rose waters prepared in small batches.", link: "#shop?category=Face" },
-    { image: "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&q=80&w=1200", title: "Wild Forest Honey & Wellness", desc: "Unpasteurized pure honey and traditional Chyawanprash cooked with fresh Amla berries.", link: "#shop?category=Health & Foods" }
+    { image: settings.banner1 || "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=1200", title: "Handspun Khadi Collection", desc: "Experience the cool breathability and rustic elegance of organic handloom garments directly from MP weaver cooperatives.", link: "#shop?category=Ready to Wear" },
+    { image: settings.banner2 || "https://images.unsplash.com/photo-1608248597481-496100c8c836?auto=format&fit=crop&q=80&w=1200", title: "Pure Ayurvedic Elixirs", desc: "Chemical-free body washes, cold-pressed sandalwood soaps, and rose waters prepared in small batches.", link: "#shop?category=Face" },
+    { image: settings.banner3 || "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&q=80&w=1200", title: "Wild Forest Honey & Wellness", desc: "Unpasteurized pure honey and traditional Chyawanprash cooked with fresh Amla berries.", link: "#shop?category=Health & Foods" }
   ];
 
   // Best sellers (rated 4.8+)
   const bestSellers = store.getProducts().filter(p => p.rating >= 4.8).slice(0, 4);
   const newArrivals = store.getProducts().slice(-4).reverse();
   const blogs = store.getBlogs().slice(0, 3);
+
+  const recentlyViewed = store.getRecentlyViewed();
+  const recentHtml = recentlyViewed.length > 0 ? `
+    <!-- Recently Viewed Section -->
+    <div class="section-title-wrap">
+      <span class="section-subtitle">Based on your browsing</span>
+      <h2 class="section-title">Recently Viewed</h2>
+    </div>
+    <div class="product-grid" style="margin-bottom:60px;">
+      ${recentlyViewed.map(p => renderProductCard(p)).join('')}
+    </div>
+  ` : '';
 
   const homeHtml = `
     <!-- Hero Slider -->
@@ -295,6 +313,8 @@ function renderHome() {
           </div>
         </div>
       </div>
+
+      ${recentHtml}
 
       <!-- Blogs Section -->
       <div class="section-title-wrap">
@@ -428,6 +448,19 @@ function renderShop(selectedCategory = '', activeConcern = '', searchString = ''
         </h2>
       </div>
 
+      <!-- Category Filter Chips -->
+      <div class="shop-categories-chips">
+        <div class="shop-chip ${!selectedCategory && !filterWishlist ? 'active' : ''}" onclick="navigateTo('#shop')">All Products</div>
+        <div class="shop-chip ${selectedCategory === 'Ready to Wear' ? 'active' : ''}" onclick="navigateTo('#shop?category=Ready to Wear')">Ready to Wear</div>
+        <div class="shop-chip ${selectedCategory === 'Fabrics' ? 'active' : ''}" onclick="navigateTo('#shop?category=Fabrics')">Pure Fabrics</div>
+        <div class="shop-chip ${selectedCategory === 'Skin' ? 'active' : ''}" onclick="navigateTo('#shop?category=Skin')">Skin Care</div>
+        <div class="shop-chip ${selectedCategory === 'Hair' ? 'active' : ''}" onclick="navigateTo('#shop?category=Hair')">Hair Care</div>
+        <div class="shop-chip ${selectedCategory === 'Face' ? 'active' : ''}" onclick="navigateTo('#shop?category=Face')">Face Care</div>
+        <div class="shop-chip ${selectedCategory === 'Health & Foods' ? 'active' : ''}" onclick="navigateTo('#shop?category=Health %26 Foods')">Foods & Honey</div>
+        <div class="shop-chip ${selectedCategory === 'Pooja' ? 'active' : ''}" onclick="navigateTo('#shop?category=Pooja')">Pooja & Itra</div>
+        <div class="shop-chip ${filterWishlist ? 'active' : ''}" onclick="navigateTo('#shop?wishlist=true')">My Wishlist</div>
+      </div>
+
       <!-- Concern chips inside active category -->
       ${concernsChips.length > 0 ? `
         <div class="shop-chips-container">
@@ -525,9 +558,24 @@ function renderProductDetail(productId) {
     return;
   }
 
+  // Track product browsing history
+  store.addRecentlyViewed(p.id);
+
   const discount = p.originalPrice > p.price ? Math.round(((p.originalPrice - p.price) / p.originalPrice) * 100) : 0;
   const isWish = store.isInWishlist(p.id);
   const related = store.getProducts().filter(item => item.category === p.category && item.id !== p.id).slice(0, 4);
+
+  // Retrieve other recently viewed items (excluding current product)
+  const recentlyViewed = store.getRecentlyViewed().filter(item => item.id !== p.id);
+  const recentHtml = recentlyViewed.length > 0 ? `
+    <div class="section-title-wrap">
+      <span class="section-subtitle">Based on your browsing</span>
+      <h2 class="section-title">Recently Viewed</h2>
+    </div>
+    <div class="product-grid" style="margin-bottom:60px;">
+      ${recentlyViewed.map(item => renderProductCard(item)).join('')}
+    </div>
+  ` : '';
 
   const detailHtml = `
     <div class="container">
@@ -667,6 +715,8 @@ function renderProductDetail(productId) {
           ${related.map(r => renderProductCard(r)).join('')}
         </div>
       ` : ''}
+
+      ${recentHtml}
     </div>
   `;
   document.getElementById('main-app').innerHTML = detailHtml;
@@ -1532,6 +1582,15 @@ function renderAdmin() {
                 </div>
               </div>
 
+              <div class="checkout-section" style="margin:0; padding:20px;">
+                <h4 style="margin-bottom:15px; font-family:var(--font-body); font-weight:700;">4. Homepage Hero Banners Customization</h4>
+                <div style="display:grid; grid-template-columns: 1fr; gap:15px;">
+                  <div class="form-group"><label>Hero Banner Slide 1 Image URL</label><input type="url" id="sett-banner1" value="${settings.banner1 || ''}"></div>
+                  <div class="form-group"><label>Hero Banner Slide 2 Image URL</label><input type="url" id="sett-banner2" value="${settings.banner2 || ''}"></div>
+                  <div class="form-group"><label>Hero Banner Slide 3 Image URL</label><input type="url" id="sett-banner3" value="${settings.banner3 || ''}"></div>
+                </div>
+              </div>
+
               <button type="submit" class="btn-primary" style="width:200px; text-align:center; align-self:flex-end;">Save Settings</button>
             </form>
           </div>
@@ -1796,7 +1855,10 @@ function handleSaveSettings(e) {
     razorpayKeyId: document.getElementById('sett-rzp-key').value,
     storePhone: document.getElementById('sett-store-phone').value,
     shiprocketEmail: document.getElementById('sett-ship-email').value,
-    shiprocketPassword: document.getElementById('sett-ship-pass').value
+    shiprocketPassword: document.getElementById('sett-ship-pass').value,
+    banner1: document.getElementById('sett-banner1').value,
+    banner2: document.getElementById('sett-banner2').value,
+    banner3: document.getElementById('sett-banner3').value
   };
 
   store.saveSettings(settingsData);
@@ -2175,8 +2237,15 @@ function toggleCartDrawer(show) {
   }
 }
 
-function toggleMobileMenu() {
-  document.getElementById('nav-menu')?.classList.toggle('active');
+function toggleMobileMenu(force) {
+  const menu = document.getElementById('nav-menu');
+  if (menu) {
+    if (typeof force === 'boolean') {
+      menu.classList.toggle('active', force);
+    } else {
+      menu.classList.toggle('active');
+    }
+  }
 }
 
 let heroSlideTimer = null;

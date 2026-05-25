@@ -17,6 +17,7 @@ class KhadiStore {
       localStorage.setItem('ks_b2b_inquiries', JSON.stringify([]));
       localStorage.setItem('ks_wishlist', JSON.stringify([]));
       localStorage.setItem('ks_cart', JSON.stringify([]));
+      localStorage.setItem('ks_recently_viewed', JSON.stringify([]));
       localStorage.setItem('ks_settings', JSON.stringify({
         dbMode: 'local', // 'local' or 'firebase'
         firebaseConfig: { apiKey: '', authDomain: '', projectId: '', storageBucket: '', messagingSenderId: '', appId: '' },
@@ -25,7 +26,10 @@ class KhadiStore {
         shiprocketPassword: '',
         storePhone: '+919876543210',
         storeAddress: "Khadi Store Ratlam, Near Station Road, Ratlam, Madhya Pradesh 457001",
-        timings: "10:00 AM - 9:00 PM (Monday - Saturday)"
+        timings: "10:00 AM - 9:00 PM (Monday - Saturday)",
+        banner1: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=1200",
+        banner2: "https://images.unsplash.com/photo-1608248597481-496100c8c836?auto=format&fit=crop&q=80&w=1200",
+        banner3: "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&q=80&w=1200"
       }));
       localStorage.setItem('ks_initialized', 'true');
     }
@@ -38,11 +42,24 @@ class KhadiStore {
     this.b2bInquiries = JSON.parse(localStorage.getItem('ks_b2b_inquiries')) || [];
     this.wishlist = JSON.parse(localStorage.getItem('ks_wishlist')) || [];
     this.cart = JSON.parse(localStorage.getItem('ks_cart')) || [];
+    this.recentlyViewed = JSON.parse(localStorage.getItem('ks_recently_viewed')) || [];
     this.settings = JSON.parse(localStorage.getItem('ks_settings')) || {};
     this.activeCoupon = null;
     
     // Listeners for UI state update
     this.listeners = [];
+  }
+
+  // --- Recently Viewed Subsystem ---
+  addRecentlyViewed(productId) {
+    this.recentlyViewed = this.recentlyViewed.filter(id => id !== productId);
+    this.recentlyViewed.unshift(productId);
+    this.recentlyViewed = this.recentlyViewed.slice(0, 4); // Cap at 4 items
+    this.saveToStorage('ks_recently_viewed', this.recentlyViewed);
+  }
+
+  getRecentlyViewed() {
+    return this.recentlyViewed.map(id => this.getProductById(id)).filter(Boolean);
   }
 
   // --- Listener Subsystem ---
