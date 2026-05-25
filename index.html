@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- SEO Optimization -->
+  <title>Khadi Store Ratlam | Premium Handspun Fabric & Ayurvedic Wellness</title>
+  <meta name="description" content="Shop organic handspun cotton, Mulberry silk, pure forest honey, Kannauj rose water, and Ayurvedic skincare directly from family weavers at Khadi Store Ratlam.">
+  <meta name="keywords" content="Khadi Store Ratlam, handloom fabric, organic silk, ayurveda skin care, bhringraj hair oil, pure honey, custom fabric Madhya Pradesh">
+  <meta name="author" content="Khadi Store Ratlam">
+  
+  <!-- OG & Twitter Card Tags (SEO Share) -->
+  <meta property="og:title" content="Khadi Store Ratlam | Organic Fabric & Ayurveda">
+  <meta property="og:description" content="Premium handwoven fabrics, Ayurvedic skin potions, and honey delivered to your doorstep. Powered by Shiprocket and Razorpay.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=600">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌿</text></svg>">
+
+  <!-- Core Styling -->
+  <link rel="stylesheet" href="css/style.css">
+  
+  <!-- Razorpay Payment Gateway script -->
+  <script src="https://checkout.razorpay.com/v1/checkout.js" defer></script>
+  
+  <!-- Confetti script for satisfying order placements -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js" defer></script>
+</head>
+<body>
+
+  <!-- DYNAMIC FRAME NODES -->
+  <header id="header-app"></header>
+
+  <!-- MAIN APP ROUTED ROUTE CONTAINER -->
+  <main id="main-app">
+    <!-- Initial Loading screen while javascript bundles load -->
+    <div style="padding: 150px 0; text-align: center; font-family: 'Outfit', sans-serif;">
+      <div style="font-size:24px; font-weight:500; color:var(--color-text-primary); margin-bottom:15px;">Loading Khadi Store Ratlam...</div>
+      <p style="color:var(--color-text-muted); font-size:14px;">Bringing you handspun fabrics and pure Ayurveda</p>
+    </div>
+  </main>
+
+  <!-- STICKY FLOATING ACTUATORS -->
+  <div id="floats-app"></div>
+
+  <!-- CART SIDE SLIDE DRAWER -->
+  <div id="cart-drawer-app"></div>
+
+  <!-- GENERAL POPUPS CONTAINER (Order track, Admin edit, etc) -->
+  <div id="modals-app"></div>
+
+  <!-- PERSISTENT SEMANTIC FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h4 class="footer-title">Khadi Store Ratlam</h4>
+          <p class="footer-about-text">
+            Representing traditional Indian handlooms and Ayurvedic heritage. We support rural artisan cooperatives by delivering unadulterated fabrics, oils, and honey directly to modern homes.
+          </p>
+          <div class="social-links">
+            <a href="https://facebook.com" target="_blank" class="social-icon" aria-label="Facebook">FB</a>
+            <a href="https://instagram.com" target="_blank" class="social-icon" aria-label="Instagram">IG</a>
+            <a href="https://twitter.com" target="_blank" class="social-icon" aria-label="Twitter">TW</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-title">Shopping Categories</h4>
+          <ul class="footer-links">
+            <li><a href="#shop?category=Ready to Wear" onclick="navigateTo('#shop?category=Ready to Wear')" class="footer-link">Ready to Wear Kurtas</a></li>
+            <li><a href="#shop?category=Fabrics" onclick="navigateTo('#shop?category=Fabrics')" class="footer-link">Handwoven Silk & Denim</a></li>
+            <li><a href="#shop?category=Skin" onclick="navigateTo('#shop?category=Skin')" class="footer-link">Ayurvedic Body Washes</a></li>
+            <li><a href="#shop?category=Hair" onclick="navigateTo('#shop?category=Hair')" class="footer-link">Bhringraj & Neem Care</a></li>
+            <li><a href="#shop?category=Face" onclick="navigateTo('#shop?category=Face')" class="footer-link">Kannauj Rose Water</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-title">Policy & Services</h4>
+          <ul class="footer-links">
+            <li><a href="#shop?wishlist=true" onclick="navigateTo('#shop?wishlist=true')" class="footer-link">My Wishlist</a></li>
+            <li><a href="#" onclick="openTrackOrderModal(); return false;" class="footer-link">Track Your Order</a></li>
+            <li><a href="#b2b" onclick="navigateTo('#b2b')" class="footer-link">B2B Wholesale Inquiries</a></li>
+            <li><a href="#blog" onclick="navigateTo('#blog')" class="footer-link">Artisan Journals (Blog)</a></li>
+            <li><a href="#" onclick="alert('Shipping Policy: We offer free express shipping across India on orders above ₹1000. All items are dispatched within 24 hours of confirmation.'); return false;" class="footer-link">Shipping & Delivery Policies</a></li>
+            <li><a href="#" onclick="alert('Return Policy: Unopened toiletries and uncut fabrics can be returned within 7 days of delivery. Returns can be processed in the admin order logs.'); return false;" class="footer-link">Returns & Refunds Policy</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col" id="footer-contact-details">
+          <h4 class="footer-title">Sourcing Headquarters</h4>
+          <p class="footer-about-text" style="line-height:1.8;">
+            📍 Near Station Road, Ratlam,<br> Madhya Pradesh, 457001<br>
+            📞 Helpline: +91 98765 43210<br>
+            ✉ Email: help@khadistoreratlam.com<br>
+            🧾 GSTIN: 23AAAAA1111A1Z1 (Registered)
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Khadi Store Ratlam. All rights reserved.</p>
+        <p>Empowering 200+ Handloom & Ayurvedic Artisans across Central India.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- CORE JAVASCRIPT INJECTION -->
+  <script src="js/data.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>

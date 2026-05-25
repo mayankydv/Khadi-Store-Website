@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Khadi Store Test Suite</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: #FAF6F0;
+      color: #2B1E16;
+      padding: 40px 20px;
+      margin: 0;
+    }
+    .test-container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      border: 1px solid #E8DFD3;
+      border-radius: 8px;
+      padding: 30px;
+      box-shadow: 0 4px 12px rgba(43, 30, 22, 0.05);
+    }
+    h1 {
+      font-family: Georgia, serif;
+      border-bottom: 2px solid #E8DFD3;
+      padding-bottom: 10px;
+      margin-top: 0;
+    }
+    .test-group {
+      margin: 25px 0;
+    }
+    .test-group-title {
+      font-weight: 700;
+      font-size: 18px;
+      color: #C5A880;
+      margin-bottom: 10px;
+    }
+    .test-case {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 15px;
+      border-bottom: 1px solid #FAF6F0;
+      font-size: 14px;
+    }
+    .test-case:hover {
+      background-color: #FAF8F5;
+    }
+    .pass {
+      color: #4E6C50;
+      font-weight: 700;
+      background-color: #E8F5E9;
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+    .fail {
+      color: #B2533E;
+      font-weight: 700;
+      background-color: #FFEBEE;
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+    .btn-run {
+      background-color: #2B1E16;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .btn-run:hover {
+      background-color: #C5A880;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="test-container">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+      <h1>🧪 Khadi Store Ratlam - Test Suite</h1>
+      <button class="btn-run" onclick="runTests()">Re-run Assertion Tests</button>
+    </div>
+    <p style="color:#6B5B52; font-size:14px; margin-bottom:30px;">
+      This suite verifies the core business logic, cart arithmetic, discount eligibility, dimensional packaging validation, and shipping rate matrices.
+    </p>
+    
+    <div id="test-results">
+      <!-- Results will be injected here -->
+    </div>
+  </div>
+
+  <!-- Load dependencies -->
+  <script src="js/data.js"></script>
+  <script src="js/store.js"></script>
+
+  <script>
+    function runTests() {
+      const resultsEl = document.getElementById('test-results');
+      resultsEl.innerHTML = '';
+
+      const testGroups = {
+        "Coupons & Discount Logic": [],
+        "Shiprocket Logistics Calculator": [],
+        "Order Flow & Stock Deductions": [],
+        "Returns & Restocking Loop": [],
+        "SEO Meta Integrity": []
+      };
+
+      // Reset store state for testing
+      store.initStore();
+      store.clearCart();
+
+      // ==========================================
+      // Group 1: Coupons & Discount Logic
+      // ==========================================
+      try {
+        // Add items to reach subtotal 1299 (Classic Kurta)
+        store.addToCart("rtw-01", 1);
+        let subtotal = store.getCartSubtotal();
+        
+        // Assert base subtotal
+        assertEqual(subtotal, 1299, "Cart Subtotal matches item price", "Coupons & Discount Logic");
+        
+        // Try invalid coupon
+        let res = store.applyCouponCode("INVALIDCODE");
+        assertEqual(res.success, false, "Invalid code returns success=false", "Coupons & Discount Logic");
+        
+        // Try coupon below min value limit (FESTIVAL20 requires 1500)
+        res = store.applyCouponCode("FESTIVAL20");
+        assertEqual(res.success, false, "FESTIVAL20 rejected for order below limit", "Coupons & Discount Logic");
+        assertEqual(store.getDiscountAmount(), 0, "No discount applied yet", "Coupons & Discount Logic");
+
+        // Apply valid coupon KHADI10
+        res = store.applyCouponCode("KHADI10");
+        assertEqual(res.success, true, "KHADI10 applied successfully for value above 500", "Coupons & Discount Logic");
+        assertEqual(store.getDiscountAmount(), 130, "10% discount calculated correctly (rounded)", "Coupons & Discount Logic");
+      } catch (err) {
+        logError(err, "Coupons & Discount Logic");
+      }
+
+      // ==========================================
+      // Group 2: Shiprocket Logistics Calculator
+      // ==========================================
+      try {
+        // Test pincode validation
+        let res = store.calculateShippingRates("abc");
+        assertEqual(res.success, false, "Rejects alphabetic postal code", "Shiprocket Logistics Calculator");
+        
+        res = store.calculateShippingRates("45700");
+        assertEqual(res.success, false, "Rejects 5-digit postal code", "Shiprocket Logistics Calculator");
+        
+        // Test serviceable Central India (MP starts with 4)
+        res = store.calculateShippingRates("457001");
+        assertEqual(res.success, true, "Serviceable local MP region", "Shiprocket Logistics Calculator");
+        assertEqual(res.charge, 0, "Free shipping because cart value 1299 is above 1000 threshold", "Shiprocket Logistics Calculator");
+
+        // Clear cart and add lower value item to test actual charges
+        store.clearCart();
+        store.addToCart("skn-02", 1); // Scrub: price 360, weight 150g
+        
+        res = store.calculateShippingRates("457001");
+        assertEqual(res.charge, 40, "MP local shipping rate is ₹40 for orders under 1000", "Shiprocket Logistics Calculator");
+        
+        res = store.calculateShippingRates("600001");
+        assertEqual(res.charge, 75, "South India postal rate is ₹75", "Shiprocket Logistics Calculator");
+      } catch (err) {
+        logError(err, "Shiprocket Logistics Calculator");
+      }
+
+      // ==========================================
+      // Group 3: Order Flow & Stock Deductions
+      // ==========================================
+      try {
+        store.clearCart();
+        
+        const testProduct = store.getProductById("fod-01"); // Honey: inventory 150
+        const initialStock = testProduct.inventory;
+        
+        store.addToCart("fod-01", 2);
+        
+        const customer = {
+          name: "Test Customer",
+          phone: "9999988888",
+          email: "test@gmail.com",
+          address: "123 Test Street",
+          city: "Ratlam",
+          state: "Madhya Pradesh",
+          pincode: "457001",
+          gst: ""
+        };
+
+        // Create Order
+        const order = store.createOrder(customer, 'COD', 'COD_PENDING');
+        assertEqual(order.status, 'pending', "Order initial status is pending", "Order Flow & Stock Deductions");
+        assertEqual(order.items.length, 1, "Order contains 1 item line", "Order Flow & Stock Deductions");
+        assertEqual(order.items[0].qty, 2, "Ordered quantity is 2", "Order Flow & Stock Deductions");
+        
+        // Verify inventory deduction
+        const updatedProduct = store.getProductById("fod-01");
+        assertEqual(updatedProduct.inventory, initialStock - 2, "Inventory deducted by 2 pieces", "Order Flow & Stock Deductions");
+
+        // Fulfill Shiprocket
+        const fulfill = store.shipOrder(order.id, "Delhivery Surface");
+        assertEqual(fulfill.success, true, "Shiprocket fulfillment succeeds with correct dimensions/weight", "Order Flow & Stock Deductions");
+        
+        const updatedOrder = store.getOrders().find(o => o.id === order.id);
+        assertEqual(updatedOrder.status, 'shipped', "Status updated to shipped", "Order Flow & Stock Deductions");
+        assertEqual(updatedOrder.shiprocketDetails.awb.startsWith("SR"), true, "AWB code generated successfully", "Order Flow & Stock Deductions");
+      } catch (err) {
+        logError(err, "Order Flow & Stock Deductions");
+      }
+
+      // ==========================================
+      // Group 4: Returns & Restocking Loop
+      // ==========================================
+      try {
+        const order = store.getOrders()[0];
+        const initialStock = store.getProductById("fod-01").inventory;
+        
+        // Process Return
+        store.returnOrder(order.id);
+        
+        const updatedOrder = store.getOrders().find(o => o.id === order.id);
+        assertEqual(updatedOrder.status, 'returned', "Status successfully updated to returned", "Returns & Restocking Loop");
+        
+        const restockedProduct = store.getProductById("fod-01");
+        assertEqual(restockedProduct.inventory, initialStock + 2, "Items restocked into inventory (+2)", "Returns & Restocking Loop");
+      } catch (err) {
+        logError(err, "Returns & Restocking Loop");
+      }
+
+      // ==========================================
+      // Group 5: SEO Meta Integrity
+      // ==========================================
+      try {
+        const pageTitle = "Khadi Store Ratlam | Premium Handspun Fabric & Ayurvedic Wellness";
+        assertEqual(document.title !== "", true, "Document has valid title tag configured", "SEO Meta Integrity");
+        assertEqual(document.title.includes("Ratlam"), true, "Title features key search keywords (Ratlam)", "SEO Meta Integrity");
+      } catch (err) {
+        logError(err, "SEO Meta Integrity");
+      }
+
+      // RENDER RESULTS
+      for (const [group, cases] of Object.entries(testGroups)) {
+        const groupDiv = document.createElement('div');
+        groupDiv.className = 'test-group';
+        groupDiv.innerHTML = `<div class="test-group-title">${group}</div>`;
+        
+        cases.forEach(c => {
+          const caseDiv = document.createElement('div');
+          caseDiv.className = 'test-case';
+          caseDiv.innerHTML = `
+            <span>${c.desc}</span>
+            <span class="${c.status}">${c.status.toUpperCase()}</span>
+          `;
+          groupDiv.appendChild(caseDiv);
+        });
+        resultsEl.appendChild(groupDiv);
+      }
+
+      function assertEqual(actual, expected, desc, group) {
+        const isPass = actual === expected;
+        testGroups[group].push({
+          desc: desc,
+          status: isPass ? "pass" : "fail"
+        });
+      }
+
+      function logError(err, group) {
+        testGroups[group].push({
+          desc: `Error: ${err.message}`,
+          status: "fail"
+        });
+      }
+    }
+
+    // Run automatically on load
+    window.onload = runTests;
+  </script>
+</body>
+</html>
