@@ -130,7 +130,7 @@ function renderHeader() {
         <li class="nav-item">
           <a href="#" class="nav-link" onclick="event.preventDefault()">More ▾</a>
           <div class="nav-dropdown">
-            <a href="#shop?category=Health & Foods" class="dropdown-link" onclick="navigateTo('#shop?category=Health & Foods')">Foods & Honey</a>
+            <a href="#shop?category=Health %26 Foods" class="dropdown-link" onclick="navigateTo('#shop?category=Health %26 Foods')">Foods & Honey</a>
             <a href="#shop?category=Pooja" class="dropdown-link" onclick="navigateTo('#shop?category=Pooja')">Pooja & Itra</a>
             <a href="#b2b" class="dropdown-link" onclick="navigateTo('#b2b')">B2B Wholesale</a>
             <a href="#blog" class="dropdown-link" onclick="navigateTo('#blog')">Artisan Blogs</a>
@@ -153,15 +153,15 @@ function renderStickyFloats() {
         ${ICONS.whatsapp}
         <span class="tooltip">WhatsApp Help</span>
       </a>
-      <a href="tel:${store.getSettings().storePhone}" class="float-btn call">
+      <a href="tel:${store.getSettings().storePhone}" class="float-btn call desktop-only">
         ${ICONS.phone}
         <span class="tooltip">Call Helpline</span>
       </a>
-      <button onclick="scrollToVisitSection()" class="float-btn visit">
+      <button onclick="scrollToVisitSection()" class="float-btn visit desktop-only">
         ${ICONS.mapPin}
         <span class="tooltip">Visit Store</span>
       </button>
-      <button onclick="openTrackOrderModal()" class="float-btn track">
+      <button onclick="openTrackOrderModal()" class="float-btn track desktop-only">
         ${ICONS.truck}
         <span class="tooltip">Track Order</span>
       </button>
@@ -177,7 +177,7 @@ function renderHome() {
   const banners = [
     { image: settings.banner1 || "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=1200", title: "Handspun Khadi Collection", desc: "Experience the cool breathability and rustic elegance of organic handloom garments directly from MP weaver cooperatives.", link: "#shop?category=Ready to Wear" },
     { image: settings.banner2 || "https://images.unsplash.com/photo-1608248597481-496100c8c836?auto=format&fit=crop&q=80&w=1200", title: "Pure Ayurvedic Elixirs", desc: "Chemical-free body washes, cold-pressed sandalwood soaps, and rose waters prepared in small batches.", link: "#shop?category=Face" },
-    { image: settings.banner3 || "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&q=80&w=1200", title: "Wild Forest Honey & Wellness", desc: "Unpasteurized pure honey and traditional Chyawanprash cooked with fresh Amla berries.", link: "#shop?category=Health & Foods" }
+    { image: settings.banner3 || "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&q=80&w=1200", title: "Wild Forest Honey & Wellness", desc: "Unpasteurized pure honey and traditional Chyawanprash cooked with fresh Amla berries.", link: "#shop?category=Health %26 Foods" }
   ];
 
   // Best sellers (rated 4.8+)
@@ -244,7 +244,7 @@ function renderHome() {
           <div class="category-card-icon">🌸</div>
           <div class="category-card-title">Face Care</div>
         </div>
-        <div class="category-card" onclick="navigateTo('#shop?category=Health & Foods')">
+        <div class="category-card" onclick="navigateTo('#shop?category=Health %26 Foods')">
           <div class="category-card-icon">🍯</div>
           <div class="category-card-title">Foods & Honey</div>
         </div>

@@ -40,6 +40,10 @@
   padding: 0;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background-color: var(--color-bg-primary);
   color: var(--color-text-primary);
@@ -942,12 +946,14 @@ header {
   background-color: var(--color-bg-secondary);
   border: 1px solid transparent;
   color: var(--color-text-muted);
-  padding: 6px 14px;
+  padding: 8px 18px;
   border-radius: 20px;
   font-size: 13px;
   font-weight: 500;
   cursor: pointer;
   transition: var(--transition-smooth);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .shop-chip.active {
