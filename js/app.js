@@ -29,10 +29,11 @@ function handleRouting() {
     renderHome();
   } else if (path === '#shop') {
     const cat = params['category'] || '';
+    const subcat = params['subcategory'] || '';
     const concern = params['concern'] || '';
     const search = params['search'] || '';
     const wishlist = params['wishlist'] === 'true';
-    renderShop(cat, concern, search, wishlist);
+    renderShop(cat, concern, search, wishlist, subcat);
   } else if (path === '#product') {
     const id = params['id'] || '';
     renderProductDetail(id);

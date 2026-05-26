@@ -14,7 +14,8 @@ const ICONS = {
   mapPin: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>',
   truck: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>',
   close: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>',
-  trash: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>'
+  trash: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>',
+  chevronDown: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>'
 };
 
 // Global Autocomplete Event setup
@@ -106,34 +107,43 @@ function renderHeader() {
       <ul class="nav-menu" id="nav-menu">
         <li class="nav-item"><a href="#" class="nav-link" onclick="navigateTo('#')">Home</a></li>
         <li class="nav-item">
-          <a href="#shop?category=Ready to Wear" class="nav-link" onclick="navigateTo('#shop?category=Ready to Wear')">Ready to Wear</a>
+          <div class="nav-link-row">
+            <a href="#shop?category=Ready to Wear" class="nav-link" onclick="navigateTo('#shop?category=Ready to Wear')">Ready to Wear</a>
+            <button class="dropdown-toggle-btn" aria-label="Toggle Submenu" onclick="toggleMobileDropdown(event, this)">${ICONS.chevronDown}</button>
+          </div>
           <div class="nav-dropdown">
-            <a href="#shop?category=Ready to Wear&subcategory=Stoles" class="dropdown-link" onclick="navigateTo('#shop?category=Ready to Wear&subcategory=Stoles & Scarves')">Stoles & Scarves</a>
-            <a href="#shop?category=Ready to Wear&subcategory=Jackets" class="dropdown-link" onclick="navigateTo('#shop?category=Ready to Wear&subcategory=Men\'s Jackets')">Men's Jackets</a>
-            <a href="#shop?category=Ready to Wear&subcategory=Kurta" class="dropdown-link" onclick="navigateTo('#shop?category=Ready to Wear&subcategory=Kurta')">Kurtas</a>
-            <a href="#shop?category=Ready to Wear&subcategory=Dhoti" class="dropdown-link" onclick="navigateTo('#shop?category=Ready to Wear&subcategory=Dhoti')">Dhoti</a>
-            <a href="#shop?category=Ready to Wear&subcategory=Towels" class="dropdown-link" onclick="navigateTo('#shop?category=Ready to Wear&subcategory=Towels')">Towels & Bedsheets</a>
+            <a href="#shop?category=Ready to Wear&subcategory=Stoles %26 Scarves" class="dropdown-link" onclick="navigateTo('#shop?category=Ready to Wear&subcategory=Stoles %26 Scarves'); return false;">Stoles & Scarves</a>
+            <a href="#shop?category=Ready to Wear&subcategory=Men%27s%20Jackets" class="dropdown-link" onclick="navigateTo('#shop?category=Ready to Wear&subcategory=Men%27s%20Jackets'); return false;">Men's Jackets</a>
+            <a href="#shop?category=Ready to Wear&subcategory=Kurta" class="dropdown-link" onclick="navigateTo('#shop?category=Ready to Wear&subcategory=Kurta'); return false;">Kurtas</a>
+            <a href="#shop?category=Ready to Wear&subcategory=Dhoti" class="dropdown-link" onclick="navigateTo('#shop?category=Ready to Wear&subcategory=Dhoti'); return false;">Dhoti</a>
+            <a href="#shop?category=Ready to Wear&subcategory=Bedsheets" class="dropdown-link" onclick="navigateTo('#shop?category=Ready to Wear&subcategory=Bedsheets'); return false;">Towels & Bedsheets</a>
           </div>
         </li>
         <li class="nav-item">
-          <a href="#shop?category=Fabrics" class="nav-link" onclick="navigateTo('#shop?category=Fabrics')">Fabrics</a>
+          <div class="nav-link-row">
+            <a href="#shop?category=Fabrics" class="nav-link" onclick="navigateTo('#shop?category=Fabrics')">Fabrics</a>
+            <button class="dropdown-toggle-btn" aria-label="Toggle Submenu" onclick="toggleMobileDropdown(event, this)">${ICONS.chevronDown}</button>
+          </div>
           <div class="nav-dropdown">
-            <a href="#shop?category=Fabrics&subcategory=Silk" class="dropdown-link" onclick="navigateTo('#shop?category=Fabrics&subcategory=Silk')">Silk Fabric</a>
-            <a href="#shop?category=Fabrics&subcategory=Cotton" class="dropdown-link" onclick="navigateTo('#shop?category=Fabrics&subcategory=Cotton')">Cotton & Linen</a>
-            <a href="#shop?category=Fabrics&subcategory=Denim" class="dropdown-link" onclick="navigateTo('#shop?category=Fabrics&subcategory=Khadi Denim')">Khadi Denim</a>
-            <a href="#shop?category=Fabrics&subcategory=Woolen" class="dropdown-link" onclick="navigateTo('#shop?category=Fabrics&subcategory=Woolen')">Woolen Cloth</a>
+            <a href="#shop?category=Fabrics&subcategory=Silk" class="dropdown-link" onclick="navigateTo('#shop?category=Fabrics&subcategory=Silk'); return false;">Silk Fabric</a>
+            <a href="#shop?category=Fabrics&subcategory=Cotton" class="dropdown-link" onclick="navigateTo('#shop?category=Fabrics&subcategory=Cotton'); return false;">Cotton & Linen</a>
+            <a href="#shop?category=Fabrics&subcategory=Khadi Denim" class="dropdown-link" onclick="navigateTo('#shop?category=Fabrics&subcategory=Khadi Denim'); return false;">Khadi Denim</a>
+            <a href="#shop?category=Fabrics&subcategory=Woolen" class="dropdown-link" onclick="navigateTo('#shop?category=Fabrics&subcategory=Woolen'); return false;">Woolen Cloth</a>
           </div>
         </li>
         <li class="nav-item"><a href="#shop?category=Skin" class="nav-link" onclick="navigateTo('#shop?category=Skin')">Skin Care</a></li>
         <li class="nav-item"><a href="#shop?category=Hair" class="nav-link" onclick="navigateTo('#shop?category=Hair')">Hair Care</a></li>
         <li class="nav-item"><a href="#shop?category=Face" class="nav-link" onclick="navigateTo('#shop?category=Face')">Face Care</a></li>
         <li class="nav-item">
-          <a href="#" class="nav-link" onclick="event.preventDefault()">More ▾</a>
+          <div class="nav-link-row">
+            <a href="#" class="nav-link" onclick="event.preventDefault()">More ▾</a>
+            <button class="dropdown-toggle-btn" aria-label="Toggle Submenu" onclick="toggleMobileDropdown(event, this)">${ICONS.chevronDown}</button>
+          </div>
           <div class="nav-dropdown">
-            <a href="#shop?category=Health %26 Foods" class="dropdown-link" onclick="navigateTo('#shop?category=Health %26 Foods')">Foods & Honey</a>
-            <a href="#shop?category=Pooja" class="dropdown-link" onclick="navigateTo('#shop?category=Pooja')">Pooja & Itra</a>
-            <a href="#b2b" class="dropdown-link" onclick="navigateTo('#b2b')">B2B Wholesale</a>
-            <a href="#blog" class="dropdown-link" onclick="navigateTo('#blog')">Artisan Blogs</a>
+            <a href="#shop?category=Health %26 Foods" class="dropdown-link" onclick="navigateTo('#shop?category=Health %26 Foods'); return false;">Foods & Honey</a>
+            <a href="#shop?category=Pooja" class="dropdown-link" onclick="navigateTo('#shop?category=Pooja'); return false;">Pooja & Itra</a>
+            <a href="#b2b" class="dropdown-link" onclick="navigateTo('#b2b'); return false;">B2B Wholesale</a>
+            <a href="#blog" class="dropdown-link" onclick="navigateTo('#blog'); return false;">Artisan Blogs</a>
           </div>
         </li>
         <li class="nav-item"><a href="#contact" class="nav-link" onclick="navigateTo('#contact')">Visit Us</a></li>
@@ -224,37 +234,61 @@ function renderHome() {
         <h2 class="section-title">Shop by Category</h2>
       </div>
       <div class="categories-grid">
-        <div class="category-card" onclick="navigateTo('#shop?category=Ready to Wear')">
-          <div class="category-card-icon">🧥</div>
-          <div class="category-card-title">Ready to Wear</div>
+        <div class="category-premium-card" onclick="navigateTo('#shop?category=Ready to Wear')">
+          <img src="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&q=80&w=400" alt="Ready to Wear" loading="lazy">
+          <div class="category-premium-card-overlay">
+            <span class="category-premium-card-subtitle">Heritage Kurtas</span>
+            <h3 class="category-premium-card-title">Ready to Wear</h3>
+          </div>
         </div>
-        <div class="category-card" onclick="navigateTo('#shop?category=Fabrics')">
-          <div class="category-card-icon">🧵</div>
-          <div class="category-card-title">Pure Fabrics</div>
+        <div class="category-premium-card" onclick="navigateTo('#shop?category=Fabrics')">
+          <img src="https://images.unsplash.com/photo-1618220179428-22790b461013?auto=format&fit=crop&q=80&w=400" alt="Pure Fabrics" loading="lazy">
+          <div class="category-premium-card-overlay">
+            <span class="category-premium-card-subtitle">Handwoven Silk & Denim</span>
+            <h3 class="category-premium-card-title">Pure Fabrics</h3>
+          </div>
         </div>
-        <div class="category-card" onclick="navigateTo('#shop?category=Skin')">
-          <div class="category-card-icon">🧴</div>
-          <div class="category-card-title">Skin Care</div>
+        <div class="category-premium-card" onclick="navigateTo('#shop?category=Skin')">
+          <img src="https://images.unsplash.com/photo-1608248597481-496100c8c836?auto=format&fit=crop&q=80&w=400" alt="Skin Care" loading="lazy">
+          <div class="category-premium-card-overlay">
+            <span class="category-premium-card-subtitle">Sandalwood & Herbs</span>
+            <h3 class="category-premium-card-title">Skin Care</h3>
+          </div>
         </div>
-        <div class="category-card" onclick="navigateTo('#shop?category=Hair')">
-          <div class="category-card-icon">🌿</div>
-          <div class="category-card-title">Hair Care</div>
+        <div class="category-premium-card" onclick="navigateTo('#shop?category=Hair')">
+          <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&q=80&w=400" alt="Hair Care" loading="lazy">
+          <div class="category-premium-card-overlay">
+            <span class="category-premium-card-subtitle">Bhringraj & Neem</span>
+            <h3 class="category-premium-card-title">Hair Care</h3>
+          </div>
         </div>
-        <div class="category-card" onclick="navigateTo('#shop?category=Face')">
-          <div class="category-card-icon">🌸</div>
-          <div class="category-card-title">Face Care</div>
+        <div class="category-premium-card" onclick="navigateTo('#shop?category=Face')">
+          <img src="https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?auto=format&fit=crop&q=80&w=400" alt="Face Care" loading="lazy">
+          <div class="category-premium-card-overlay">
+            <span class="category-premium-card-subtitle">Rose Water & Scrubs</span>
+            <h3 class="category-premium-card-title">Face Care</h3>
+          </div>
         </div>
-        <div class="category-card" onclick="navigateTo('#shop?category=Health %26 Foods')">
-          <div class="category-card-icon">🍯</div>
-          <div class="category-card-title">Foods & Honey</div>
+        <div class="category-premium-card" onclick="navigateTo('#shop?category=Health %26 Foods')">
+          <img src="https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&q=80&w=400" alt="Foods & Honey" loading="lazy">
+          <div class="category-premium-card-overlay">
+            <span class="category-premium-card-subtitle">Wild Forest Honey</span>
+            <h3 class="category-premium-card-title">Foods & Honey</h3>
+          </div>
         </div>
-        <div class="category-card" onclick="navigateTo('#shop?category=Pooja')">
-          <div class="category-card-icon">🕯️</div>
-          <div class="category-card-title">Pooja & Itra</div>
+        <div class="category-premium-card" onclick="navigateTo('#shop?category=Pooja')">
+          <img src="https://images.unsplash.com/photo-1606744824163-985d376605aa?auto=format&fit=crop&q=80&w=400" alt="Pooja & Itra" loading="lazy">
+          <div class="category-premium-card-overlay">
+            <span class="category-premium-card-subtitle">Natural Incense</span>
+            <h3 class="category-premium-card-title">Pooja & Itra</h3>
+          </div>
         </div>
-        <div class="category-card" onclick="navigateTo('#b2b')">
-          <div class="category-card-icon">💼</div>
-          <div class="category-card-title">B2B Wholesale</div>
+        <div class="category-premium-card" onclick="navigateTo('#b2b')">
+          <img src="https://images.unsplash.com/photo-1578894381163-e72c17f2d45f?auto=format&fit=crop&q=80&w=400" alt="B2B Wholesale" loading="lazy">
+          <div class="category-premium-card-overlay">
+            <span class="category-premium-card-subtitle">Bulk Artisan Orders</span>
+            <h3 class="category-premium-card-title">B2B Wholesale</h3>
+          </div>
         </div>
       </div>
 
@@ -410,7 +444,7 @@ function renderProductCard(p) {
 }
 
 // --- Shop Page Renderer ---
-function renderShop(selectedCategory = '', activeConcern = '', searchString = '', filterWishlist = false) {
+function renderShop(selectedCategory = '', activeConcern = '', searchString = '', filterWishlist = false, selectedSubcategory = '') {
   const allProducts = store.getProducts();
   let filtered = [...allProducts];
 
@@ -423,6 +457,11 @@ function renderShop(selectedCategory = '', activeConcern = '', searchString = ''
   // Category filter
   if (selectedCategory) {
     filtered = filtered.filter(p => p.category.toLowerCase() === selectedCategory.toLowerCase());
+  }
+
+  // Subcategory filter
+  if (selectedSubcategory) {
+    filtered = filtered.filter(p => p.subcategory && p.subcategory.toLowerCase() === selectedSubcategory.toLowerCase());
   }
 
   // Concern filter
@@ -446,7 +485,7 @@ function renderShop(selectedCategory = '', activeConcern = '', searchString = ''
       <div class="section-title-wrap">
         <span class="section-subtitle">Heritage Handcrafts</span>
         <h2 class="section-title">
-          ${filterWishlist ? 'Your Wishlist' : (selectedCategory ? `${selectedCategory}` : (searchString ? `Search results for "${searchString}"` : 'All Products'))}
+          ${filterWishlist ? 'Your Wishlist' : (selectedSubcategory ? `${selectedCategory} &raquo; ${selectedSubcategory}` : (selectedCategory ? `${selectedCategory}` : (searchString ? `Search results for "${searchString}"` : 'All Products')))}
         </h2>
       </div>
 
@@ -2308,7 +2347,17 @@ function showToast(msg) {
   }, 2500);
 }
 
+function toggleMobileDropdown(event, btn) {
+  event.preventDefault();
+  event.stopPropagation();
+  const parentLi = btn.closest('.nav-item');
+  if (parentLi) {
+    parentLi.classList.toggle('open');
+  }
+}
+
 // Attach callbacks to window for inline onclick attributes
+window.toggleMobileDropdown = toggleMobileDropdown;
 window.navigateTo = (hash) => {
   window.location.hash = hash;
 };

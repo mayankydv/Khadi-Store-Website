@@ -351,6 +351,10 @@ header {
   font-size: 24px;
 }
 
+.dropdown-toggle-btn {
+  display: none;
+}
+
 /* ==========================================================================
    STICKY FLOATING BUTTONS
    ========================================================================== */
@@ -579,44 +583,72 @@ header {
 
 .categories-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
   gap: 16px;
   margin-bottom: 50px;
 }
 
-.category-card {
-  background-color: var(--color-bg-card);
-  border: 1px solid var(--color-border);
-  border-radius: var(--border-radius-md);
-  padding: 20px 10px;
-  text-align: center;
-  box-shadow: 0 4px 6px var(--color-shadow);
-  transition: var(--transition-smooth);
+@media (max-width: 480px) {
+  .categories-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
-.category-card:hover {
+.category-premium-card {
+  position: relative;
+  height: 180px;
+  border-radius: var(--border-radius-md);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  box-shadow: 0 4px 10px var(--color-shadow);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  background-color: var(--color-bg-secondary);
+}
+
+.category-premium-card:hover {
   transform: translateY(-5px);
   border-color: var(--color-accent-gold);
-  box-shadow: 0 8px 15px rgba(43, 30, 22, 0.08);
+  box-shadow: 0 10px 20px rgba(27, 51, 34, 0.15);
 }
 
-.category-card-icon {
-  width: 48px;
-  height: 48px;
-  margin: 0 auto 12px;
+.category-premium-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.category-premium-card:hover img {
+  transform: scale(1.08);
+}
+
+.category-premium-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(27, 51, 34, 0.95) 0%, rgba(27, 51, 34, 0.3) 60%, transparent 100%);
   display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--color-bg-secondary);
-  border-radius: 50%;
-  color: var(--color-accent-gold-dark);
-  font-size: 20px;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 16px 12px;
+  z-index: 1;
 }
 
-.category-card-title {
-  font-size: 13px;
+.category-premium-card-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #FAF6F0;
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+
+.category-premium-card-subtitle {
+  font-size: 10px;
+  color: var(--color-accent-gold);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
   font-weight: 600;
-  color: var(--color-text-primary);
 }
 
 /* Concerns Section */
@@ -1088,11 +1120,18 @@ header {
 
 .prod-coupon-hint {
   font-size: 13px;
-  color: var(--color-accent-green);
+  color: #1B3322;
   font-weight: 500;
-  display: flex;
-  align-items: center;
-  gap: 5px;
+  display: block;
+  padding: 10px 14px;
+  background-color: #FAF6F0;
+  border-left: 3px solid var(--color-accent-gold-dark);
+  border-radius: 4px;
+  margin: 15px 0;
+  line-height: 1.5;
+  border-top: 1px solid rgba(197, 168, 128, 0.15);
+  border-right: 1px solid rgba(197, 168, 128, 0.15);
+  border-bottom: 1px solid rgba(197, 168, 128, 0.15);
 }
 
 .prod-qty-selector {
@@ -2107,6 +2146,9 @@ footer {
     transform: translateY(-10px);
     transition: opacity 0.22s cubic-bezier(0.4, 0, 0.2, 1), transform 0.22s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.22s;
     pointer-events: none;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
   .nav-menu.active {
     opacity: 1;
@@ -2117,22 +2159,47 @@ footer {
   .nav-item {
     width: 100%;
     text-align: left;
-    padding: 10px 24px;
+    padding: 8px 24px;
+  }
+  .nav-link-row {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    width: 100% !important;
+  }
+  .dropdown-toggle-btn {
+    display: flex !important;
+    background: none !important;
+    border: none !important;
+    color: var(--color-accent-gold) !important;
+    cursor: pointer !important;
+    padding: 8px 12px !important;
+    font-size: 16px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: transform 0.3s ease !important;
+  }
+  .nav-item.open .dropdown-toggle-btn {
+    transform: rotate(180deg) !important;
   }
   .nav-dropdown {
-    position: static;
-    transform: none;
-    box-shadow: none;
-    border: none;
-    background-color: rgba(255, 255, 255, 0.04);
-    width: 100%;
-    margin-top: 8px;
-    padding: 8px 0;
-    opacity: 1;
-    visibility: visible;
-    display: block;
+    display: none !important;
+    position: static !important;
+    transform: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    background-color: rgba(255, 255, 255, 0.04) !important;
+    width: 100% !important;
+    margin-top: 8px !important;
+    padding: 8px 0 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+  .nav-item.open .nav-dropdown {
+    display: block !important;
   }
   .dropdown-link {
+    display: block;
     padding: 10px 30px;
     font-size: 14px;
     border-left: 2px solid rgba(197, 168, 128, 0.3);
@@ -2174,8 +2241,20 @@ footer {
     width: 44px;
     height: 44px;
   }
+  .product-gallery {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 15px !important;
+    width: 100% !important;
+  }
   .product-main-view {
-    height: 320px;
+    display: block !important;
+    height: 320px !important;
+    width: 100% !important;
+    flex-shrink: 0 !important;
+  }
+  .thumb-item {
+    flex-shrink: 0 !important;
   }
   .b2b-header-banner {
     padding: 30px 15px;
