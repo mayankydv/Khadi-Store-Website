@@ -86,11 +86,11 @@ function renderHeader() {
         </div>
 
         <div class="header-actions">
-          <a href="#admin" class="action-btn" title="Admin Dashboard" onclick="navigateTo('#admin')">
+          <a href="#admin" class="action-btn desktop-only" title="Admin Dashboard" onclick="navigateTo('#admin')">
             ${ICONS.user}
-            <span style="font-size:11px; font-weight:600; margin-left:5px;" class="desktop-only">Admin</span>
+            <span style="font-size:11px; font-weight:600; margin-left:5px;">Admin</span>
           </a>
-          <a href="#shop?wishlist=true" class="action-btn" title="Wishlist" onclick="navigateTo('#shop?wishlist=true')">
+          <a href="#shop?wishlist=true" class="action-btn desktop-only" title="Wishlist" onclick="navigateTo('#shop?wishlist=true')">
             ${ICONS.heart}
             ${wishlistCount > 0 ? `<span class="badge">${wishlistCount}</span>` : ''}
           </a>
@@ -137,6 +137,8 @@ function renderHeader() {
           </div>
         </li>
         <li class="nav-item"><a href="#contact" class="nav-link" onclick="navigateTo('#contact')">Visit Us</a></li>
+        <li class="nav-item mobile-only"><a href="#shop?wishlist=true" class="nav-link" onclick="navigateTo('#shop?wishlist=true')">My Wishlist</a></li>
+        <li class="nav-item mobile-only"><a href="#admin" class="nav-link" onclick="navigateTo('#admin')">Admin Panel</a></li>
       </ul>
     </nav>
   `;
