@@ -651,43 +651,121 @@ header {
   font-weight: 600;
 }
 
-/* Concerns Section */
-.concerns-container {
-  background-color: var(--color-bg-secondary);
-  padding: 50px 0;
-  border-radius: var(--border-radius-lg);
+/* Concerns Section - Premium Floating HD Cards */
+.concerns-premium-section {
   margin-bottom: 60px;
 }
 
-.concerns-chips-wrap {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 12px;
-  max-width: 800px;
-  margin: 0 auto;
+.concerns-premium-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
 }
 
-.concern-chip {
-  background-color: var(--color-bg-card);
+.concern-premium-card {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  border-radius: 12px;
+  overflow: hidden;
   border: 1px solid var(--color-border);
-  color: var(--color-text-primary);
-  padding: 10px 20px;
-  border-radius: 30px;
-  font-size: 14px;
-  font-weight: 500;
-  box-shadow: 0 2px 4px var(--color-shadow);
-  transition: var(--transition-smooth);
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  box-shadow: 0 4px 15px var(--color-shadow);
+  cursor: pointer;
+  transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), border-color 0.4s ease, box-shadow 0.4s ease;
+  background-color: var(--color-bg-secondary);
 }
 
-.concern-chip:hover {
+.concern-premium-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.concern-premium-card:hover {
+  transform: translateY(-8px);
   border-color: var(--color-accent-gold);
-  color: var(--color-accent-gold-dark);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 12px 30px rgba(27, 51, 34, 0.25);
+}
+
+.concern-premium-card:hover img {
+  transform: scale(1.08);
+}
+
+.concern-premium-card-overlay {
+  position: absolute;
+  bottom: 15px;
+  left: 15px;
+  right: 15px;
+  background: rgba(27, 51, 34, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(197, 168, 128, 0.25);
+  border-radius: 8px;
+  padding: 14px;
+  z-index: 2;
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.concern-premium-card:hover .concern-premium-card-overlay {
+  background: var(--color-accent-gold);
+  border-color: #FAF6F0;
+  transform: scale(1.02);
+}
+
+.concern-premium-card-subtitle {
+  font-size: 10px;
+  color: var(--color-accent-gold);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 4px;
+  display: block;
+  font-weight: 700;
+  transition: color 0.4s ease;
+}
+
+.concern-premium-card:hover .concern-premium-card-subtitle {
+  color: #1B3322;
+}
+
+.concern-premium-card-title {
+  font-family: var(--font-heading);
+  font-size: 16px;
+  font-weight: 700;
+  color: #FAF6F0;
+  margin: 0;
+  transition: color 0.4s ease;
+}
+
+.concern-premium-card:hover .concern-premium-card-title {
+  color: #1B3322;
+}
+
+/* Responsive Concern Grid */
+@media (max-width: 992px) {
+  .concerns-premium-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .concerns-premium-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+  .concern-premium-card-overlay {
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    padding: 10px;
+  }
+  .concern-premium-card-title {
+    font-size: 14px;
+  }
+  .concern-premium-card-subtitle {
+    font-size: 9px;
+    letter-spacing: 1px;
+  }
 }
 
 /* ==========================================================================

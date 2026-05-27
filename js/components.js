@@ -87,10 +87,6 @@ function renderHeader() {
         </div>
 
         <div class="header-actions">
-          <a href="#admin" class="action-btn desktop-only" title="Admin Dashboard" onclick="navigateTo('#admin')">
-            ${ICONS.user}
-            <span style="font-size:11px; font-weight:600; margin-left:5px;">Admin</span>
-          </a>
           <a href="#shop?wishlist=true" class="action-btn desktop-only" title="Wishlist" onclick="navigateTo('#shop?wishlist=true')">
             ${ICONS.heart}
             ${wishlistCount > 0 ? `<span class="badge">${wishlistCount}</span>` : ''}
@@ -148,7 +144,6 @@ function renderHeader() {
         </li>
         <li class="nav-item"><a href="#contact" class="nav-link" onclick="navigateTo('#contact')">Visit Us</a></li>
         <li class="nav-item mobile-only"><a href="#shop?wishlist=true" class="nav-link" onclick="navigateTo('#shop?wishlist=true')">My Wishlist</a></li>
-        <li class="nav-item mobile-only"><a href="#admin" class="nav-link" onclick="navigateTo('#admin')">Admin Panel</a></li>
       </ul>
     </nav>
   `;
@@ -293,20 +288,30 @@ function renderHome() {
       </div>
 
       <!-- Shop by Concern (Ayurvedic highlight) -->
-      <div class="concerns-container">
+      <div class="concerns-premium-section">
         <div class="section-title-wrap" style="margin-top:0;">
           <span class="section-subtitle">Targeted Ayurvedic Solutions</span>
           <h2 class="section-title">Shop by Concern</h2>
         </div>
-        <div class="concerns-chips-wrap">
-          <button class="concern-chip" onclick="navigateTo('#shop?concern=Hair Fall')">💆‍♀️ Hair Fall</button>
-          <button class="concern-chip" onclick="navigateTo('#shop?concern=Dry Skin')">❄️ Dry Skin</button>
-          <button class="concern-chip" onclick="navigateTo('#shop?concern=Acne')">✨ Acne Care</button>
-          <button class="concern-chip" onclick="navigateTo('#shop?concern=Pigmentation')">☀️ Pigmentation</button>
-          <button class="concern-chip" onclick="navigateTo('#shop?concern=Body Pain')">🧴 Muscle Relief</button>
-          <button class="concern-chip" onclick="navigateTo('#shop?concern=Immunity')">🍋 Immunity Boost</button>
-          <button class="concern-chip" onclick="navigateTo('#shop?concern=Summer Wear')">🌤️ Summer wear</button>
-          <button class="concern-chip" onclick="navigateTo('#shop?concern=Winter Wear')">🧣 Winter warmth</button>
+        <div class="concerns-premium-grid">
+          ${[
+            { name: "Hair Fall", img: settings.concernImg1, sub: "Strengthen Roots" },
+            { name: "Dandruff", img: settings.concernImg2, sub: "Scalp Care" },
+            { name: "Dry Skin", img: settings.concernImg3, sub: "Deep Moisture" },
+            { name: "Acne Care", filter: "Acne", img: settings.concernImg4, sub: "Clear Glow" },
+            { name: "Anti Aging", img: settings.concernImg5, sub: "Age Defying" },
+            { name: "Sugar Control", img: settings.concernImg6, sub: "Diabetes Care" },
+            { name: "Joint Pain", img: settings.concernImg7, sub: "Pain Relief" },
+            { name: "Immunity Boost", img: settings.concernImg8, sub: "Daily Vitality" }
+          ].map(c => `
+            <div class="concern-premium-card" onclick="navigateTo('#shop?concern=${encodeURIComponent(c.filter || c.name)}')">
+              <img src="${c.img}" alt="${c.name}" loading="lazy">
+              <div class="concern-premium-card-overlay">
+                <span class="concern-premium-card-subtitle">${c.sub}</span>
+                <h3 class="concern-premium-card-title">${c.name}</h3>
+              </div>
+            </div>
+          `).join('')}
         </div>
       </div>
 
@@ -448,6 +453,15 @@ function renderShop(selectedCategory = '', activeConcern = '', searchString = ''
   const allProducts = store.getProducts();
   let filtered = [...allProducts];
 
+  const uniqueConcerns = [];
+  Object.entries(INITIAL_CONCERNS).forEach(([cat, list]) => {
+    list.forEach(c => {
+      if (!uniqueConcerns.find(x => x.name.toLowerCase() === c.name.toLowerCase())) {
+        uniqueConcerns.push(c);
+      }
+    });
+  });
+
   // Search logic
   if (searchString) {
     const q = searchString.toLowerCase();
@@ -551,13 +565,12 @@ function renderShop(selectedCategory = '', activeConcern = '', searchString = ''
           
           <div class="filter-group">
             <h3 class="filter-title">Concerns</h3>
-            <div style="display:flex; flex-direction:column; gap:8px; font-size:13px;">
-              <a href="#shop?concern=Hair Fall" onclick="navigateTo('#shop?concern=Hair Fall'); return false;" style="${activeConcern === 'Hair Fall' ? 'font-weight:700; color:var(--color-accent-gold-dark);' : 'color:var(--color-text-muted);'}">💇‍♀️ Hair Fall</a>
-              <a href="#shop?concern=Dry Skin" onclick="navigateTo('#shop?concern=Dry Skin'); return false;" style="${activeConcern === 'Dry Skin' ? 'font-weight:700; color:var(--color-accent-gold-dark);' : 'color:var(--color-text-muted);'}">❄️ Dry Skin</a>
-              <a href="#shop?concern=Acne" onclick="navigateTo('#shop?concern=Acne'); return false;" style="${activeConcern === 'Acne' ? 'font-weight:700; color:var(--color-accent-gold-dark);' : 'color:var(--color-text-muted);'}">✨ Acne Care</a>
-              <a href="#shop?concern=Pigmentation" onclick="navigateTo('#shop?concern=Pigmentation'); return false;" style="${activeConcern === 'Pigmentation' ? 'font-weight:700; color:var(--color-accent-gold-dark);' : 'color:var(--color-text-muted);'}">☀️ Pigmentation</a>
-              <a href="#shop?concern=Body Pain" onclick="navigateTo('#shop?concern=Body Pain'); return false;" style="${activeConcern === 'Body Pain' ? 'font-weight:700; color:var(--color-accent-gold-dark);' : 'color:var(--color-text-muted);'}">🧴 Muscle Relief</a>
-              <a href="#shop?concern=Immunity" onclick="navigateTo('#shop?concern=Immunity'); return false;" style="${activeConcern === 'Immunity' ? 'font-weight:700; color:var(--color-accent-gold-dark);' : 'color:var(--color-text-muted);'}">🍋 Immunity Boost</a>
+            <div style="display:flex; flex-direction:column; gap:8px; font-size:13px; max-height:220px; overflow-y:auto; padding-right:5px;">
+              ${uniqueConcerns.map(c => `
+                <a href="#shop?concern=${encodeURIComponent(c.name)}" onclick="navigateTo('#shop?concern=${encodeURIComponent(c.name)}'); return false;" style="${activeConcern.toLowerCase() === c.name.toLowerCase() ? 'font-weight:700; color:var(--color-accent-gold-dark);' : 'color:var(--color-text-muted);'}">
+                  🌿 ${c.name}
+                </a>
+              `).join('')}
             </div>
           </div>
         </div>
@@ -1632,6 +1645,20 @@ function renderAdmin() {
                 </div>
               </div>
 
+              <div class="checkout-section" style="margin:0; padding:20px;">
+                <h4 style="margin-bottom:15px; font-family:var(--font-body); font-weight:700;">5. Homepage Shop by Concern Cards (HD Image URLs)</h4>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
+                  <div class="form-group"><label>Concern 1 (Hair Fall) Image URL</label><input type="url" id="sett-concern-img1" value="${settings.concernImg1 || ''}"></div>
+                  <div class="form-group"><label>Concern 2 (Dandruff) Image URL</label><input type="url" id="sett-concern-img2" value="${settings.concernImg2 || ''}"></div>
+                  <div class="form-group"><label>Concern 3 (Dry Skin) Image URL</label><input type="url" id="sett-concern-img3" value="${settings.concernImg3 || ''}"></div>
+                  <div class="form-group"><label>Concern 4 (Acne Care) Image URL</label><input type="url" id="sett-concern-img4" value="${settings.concernImg4 || ''}"></div>
+                  <div class="form-group"><label>Concern 5 (Anti Aging) Image URL</label><input type="url" id="sett-concern-img5" value="${settings.concernImg5 || ''}"></div>
+                  <div class="form-group"><label>Concern 6 (Sugar Control) Image URL</label><input type="url" id="sett-concern-img6" value="${settings.concernImg6 || ''}"></div>
+                  <div class="form-group"><label>Concern 7 (Joint Pain) Image URL</label><input type="url" id="sett-concern-img7" value="${settings.concernImg7 || ''}"></div>
+                  <div class="form-group"><label>Concern 8 (Immunity Boost) Image URL</label><input type="url" id="sett-concern-img8" value="${settings.concernImg8 || ''}"></div>
+                </div>
+              </div>
+
               <button type="submit" class="btn-primary" style="width:200px; text-align:center; align-self:flex-end;">Save Settings</button>
             </form>
           </div>
@@ -1899,7 +1926,15 @@ function handleSaveSettings(e) {
     shiprocketPassword: document.getElementById('sett-ship-pass').value,
     banner1: document.getElementById('sett-banner1').value,
     banner2: document.getElementById('sett-banner2').value,
-    banner3: document.getElementById('sett-banner3').value
+    banner3: document.getElementById('sett-banner3').value,
+    concernImg1: document.getElementById('sett-concern-img1').value,
+    concernImg2: document.getElementById('sett-concern-img2').value,
+    concernImg3: document.getElementById('sett-concern-img3').value,
+    concernImg4: document.getElementById('sett-concern-img4').value,
+    concernImg5: document.getElementById('sett-concern-img5').value,
+    concernImg6: document.getElementById('sett-concern-img6').value,
+    concernImg7: document.getElementById('sett-concern-img7').value,
+    concernImg8: document.getElementById('sett-concern-img8').value
   };
 
   store.saveSettings(settingsData);

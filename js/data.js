@@ -168,7 +168,7 @@ const INITIAL_PRODUCTS = [
     ],
     ingredients: "Kashmiri Saffron extract, Cold-pressed Sweet Almond Oil, Organic Shea Butter, Aloe Vera Gel, Wheat Germ Oil",
     usage: "Apply generously all over body after bathing. Massage gently in upward circular motions.",
-    concerns: ["Dry Skin", "Body Pain"],
+    concerns: ["Dry Skin", "Joint Pain"],
     inventory: 80,
     weight: 280, // ml plus packaging
     dimensions: { length_cm: 18, width_cm: 6, height_cm: 6 },
@@ -370,7 +370,7 @@ const INITIAL_PRODUCTS = [
     ],
     ingredients: "100% Pure Wild Forest Honey",
     usage: "Consume 1 teaspoon with warm water every morning, or use as a natural sweetener in teas and cereals.",
-    concerns: ["Immunity"],
+    concerns: ["Immunity Boost", "Digestive Care"],
     inventory: 150,
     weight: 500, // 500g bottle
     dimensions: { length_cm: 14, width_cm: 8, height_cm: 8 },
@@ -398,7 +398,7 @@ const INITIAL_PRODUCTS = [
     ],
     ingredients: "Fresh Amla, Ashwagandha, Giloy, Shatavari, Pippali, Pure Cow Ghee, Organic Jaggery, Cardamom, Honey",
     usage: "Adults: 1 tablespoon twice a day with warm milk/water. Children: 1/2 tablespoon.",
-    concerns: ["Immunity", "Body Pain"],
+    concerns: ["Immunity Boost", "Joint Pain"],
     inventory: 70,
     weight: 600,
     dimensions: { length_cm: 15, width_cm: 9, height_cm: 9 },
@@ -435,6 +435,34 @@ const INITIAL_PRODUCTS = [
     sku: "KSR-PJA-DHP-SND",
     hsn: "33074100",
     gst: 18
+  },
+  {
+    id: "fod-03",
+    name: "Ayurvedic Jamun Neem Karela Juice",
+    category: "Health & Foods",
+    subcategory: "Wellness",
+    price: 299,
+    originalPrice: 399,
+    rating: 4.7,
+    reviewsCount: 38,
+    image: "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&q=80&w=300",
+    video: "",
+    description: "Traditional Ayurvedic blend of cold-pressed Bitter Gourd (Karela), Java Plum seeds (Jamun), and Neem leaves. Formulated to support healthy blood sugar regulation, purify the blood, and aid digestive health.",
+    benefits: [
+      "Helps regulate glucose levels naturally",
+      "Purifies blood and improves skin complexion",
+      "Boosts metabolism and liver function",
+      "No added sugar, colors, or artificial flavors"
+    ],
+    ingredients: "Karela Juice 40%, Jamun Juice 30%, Neem Extract 20%, Amla Extract 9.8%, Preservatives 0.2%",
+    usage: "Mix 30ml juice in a glass of warm water. Drink empty stomach in the morning.",
+    concerns: ["Sugar Control", "Immunity Boost"],
+    inventory: 80,
+    weight: 1000,
+    dimensions: { length_cm: 22, width_cm: 9, height_cm: 9 },
+    sku: "KSR-FOD-JKN-1L",
+    hsn: "30049011",
+    gst: 12
   }
 ];
 
@@ -456,19 +484,13 @@ const INITIAL_CONCERNS = {
   "Skin": [
     { id: "dry-skin", name: "Dry Skin" },
     { id: "pigmentation", name: "Pigmentation" },
-    { id: "body-pain", name: "Body Pain" }
+    { id: "body-pain", name: "Joint Pain" }
   ],
   "Health & Foods": [
-    { id: "immunity", name: "Immunity" },
-    { id: "body-pain", name: "Body Pain" }
-  ],
-  "Ready to Wear": [
-    { id: "summer-wear", name: "Summer Wear" },
-    { id: "winter-wear", name: "Winter Wear" }
-  ],
-  "Fabrics": [
-    { id: "summer-wear", name: "Summer Wear" },
-    { id: "winter-wear", name: "Winter Wear" }
+    { id: "immunity", name: "Immunity Boost" },
+    { id: "body-pain", name: "Joint Pain" },
+    { id: "sugar-control", name: "Sugar Control" },
+    { id: "digestive-care", name: "Digestive Care" }
   ]
 };
 

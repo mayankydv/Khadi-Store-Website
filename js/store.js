@@ -468,7 +468,16 @@ class KhadiStore {
 
   // --- Settings & Integrations ---
   getSettings() {
-    return this.settings;
+    const s = this.settings || {};
+    if (!s.concernImg1) s.concernImg1 = "https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&q=80&w=300";
+    if (!s.concernImg2) s.concernImg2 = "https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?auto=format&fit=crop&q=80&w=300";
+    if (!s.concernImg3) s.concernImg3 = "https://images.unsplash.com/photo-1616683693504-3ea7e9ad6fec?auto=format&fit=crop&q=80&w=300";
+    if (!s.concernImg4) s.concernImg4 = "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&q=80&w=300";
+    if (!s.concernImg5) s.concernImg5 = "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&q=80&w=300";
+    if (!s.concernImg6) s.concernImg6 = "https://images.unsplash.com/photo-1611078489935-0cb964de46d6?auto=format&fit=crop&q=80&w=300";
+    if (!s.concernImg7) s.concernImg7 = "https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?auto=format&fit=crop&q=80&w=300";
+    if (!s.concernImg8) s.concernImg8 = "https://images.unsplash.com/photo-1610970881699-44a5587caaec?auto=format&fit=crop&q=80&w=300";
+    return s;
   }
 
   saveSettings(newSettings) {
